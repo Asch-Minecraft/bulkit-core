@@ -36,7 +36,13 @@ repositories {
     mavenLocal()
 
     maven {
+        name = "BulkIt! API"
         url = uri("https://repo.repsy.io/mvn/asch/bulkit-api")
+    }
+
+    maven {
+        name = "Kotlin for Forge"
+        setUrl("https://thedarkcolour.github.io/KotlinForForge/")
     }
 }
 
@@ -109,6 +115,7 @@ configurations {
 
 dependencies {
     compileOnly(libs.bulkit.api)
+    implementation(libs.kotlinforforge)
 }
 
 val generateModMetadata = tasks.register<ProcessResources>("generateModMetadata") {

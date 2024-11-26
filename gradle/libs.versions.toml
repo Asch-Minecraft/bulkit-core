@@ -1,9 +1,11 @@
 [versions]
-bulkit-api = "0.1.0-alpha"
+bulkit-api = "0.1.0-SNAPSHOT"
 neoforged-moddev = "2.0.42-beta"
+kotlinforforge = "5.6.0"
 
 [libraries]
 bulkit-api = { module="org.asch.bulkit.api:bulkit-api", version.ref="bulkit-api" }
+kotlinforforge = { module="thedarkcolour:kotlinforforge-neoforge", version.ref="kotlinforforge" }
 
 [plugins]
 neoforged-moddev = { id="net.neoforged.moddev", version.ref="neoforged-moddev" }
