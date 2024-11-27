@@ -114,7 +114,7 @@ configurations {
 }
 
 dependencies {
-    compileOnly(libs.bulkit.api)
+    implementation(libs.bulkit.api)
     implementation(libs.kotlinforforge)
 }
 

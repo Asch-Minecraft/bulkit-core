@@ -2,19 +2,14 @@ package org.asch.bulkit.core.setup
 
 import net.minecraft.core.registries.BuiltInRegistries
 import net.neoforged.bus.api.IEventBus
-import org.asch.bulkit.api.resource.DeferredResourceRegister
+import org.asch.bulkit.api.registry.ResourceTypeRegister
 import org.asch.bulkit.core.BulkIt
 
 object ResourceTypes {
-    private val REGISTRAR = DeferredResourceRegister(BulkIt.ID, Items.REGISTRAR)
+    private val REGISTRAR = ResourceTypeRegister(BulkIt.ID)
 
-    val ITEM = REGISTRAR.registerResourceType("item") { builder ->
-        builder.registry(BuiltInRegistries.ITEM)
-    }
-
-    val FLUID = REGISTRAR.registerResourceType("fluid") { builder ->
-        builder.registry(BuiltInRegistries.FLUID)
-    }
+    val ITEM = REGISTRAR.registerResourceType("item", BuiltInRegistries.ITEM) { builder -> builder }
+    val FLUID = REGISTRAR.registerResourceType("fluid", BuiltInRegistries.FLUID) { builder -> builder }
 
     fun register(modBus: IEventBus) = REGISTRAR.register(modBus)
 }
