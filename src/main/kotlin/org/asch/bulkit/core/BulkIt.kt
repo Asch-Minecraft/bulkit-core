@@ -1,35 +1,25 @@
 package org.asch.bulkit.core
 
 import com.mojang.logging.LogUtils
-import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.world.item.Item
-import net.minecraft.world.level.material.Fluid
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent
-import net.neoforged.neoforge.registries.DeferredHolder
+import net.neoforged.neoforge.capabilities.Capabilities
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.registries.NewRegistryEvent
-import org.asch.bulkit.api.BulkItApi
-import org.asch.bulkit.api.registry.BulkItRegistries
-import org.asch.bulkit.api.registry.CreativeModTabs
-import org.asch.bulkit.api.registry.DiskDataComponents
-import org.asch.bulkit.api.resource.ResourceType
-import org.asch.bulkit.core.setup.Items
+import org.asch.bulkit.api.registry.core.BulkItCreativeTabs
+import org.asch.bulkit.api.registry.core.BulkItDataComponents
+import org.asch.bulkit.api.registry.core.BulkItRegistries
+import org.asch.bulkit.core.common.capability.DiskItemHandler
+import org.asch.bulkit.core.setup.CoreItems
+import org.asch.bulkit.core.setup.CoreResourceTypes
 import org.slf4j.Logger
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS
 
 @Mod(BulkIt.ID)
 object BulkIt {
     const val ID: String = "bulkit"
-    val LOGGER: Logger = LogUtils.getLogger()
-    val MOD: BulkItApi.Mod = BulkItApi.Mod(ID)
-
-    val ITEM: DeferredHolder<ResourceType<*>, ResourceType<Item>> =
-        MOD.registerResourceType("item", BuiltInRegistries.ITEM) { builder -> builder }
-
-    val FLUID: DeferredHolder<ResourceType<*>, ResourceType<Fluid>> =
-        MOD.registerResourceType("fluid", BuiltInRegistries.FLUID) { builder -> builder }
-
+    private val LOGGER: Logger = LogUtils.getLogger()
 
     init {
         val modBus = MOD_BUS
@@ -37,15 +27,19 @@ object BulkIt {
         register(modBus)
         modBus.addListener(NewRegistryEvent::class.java, BulkItRegistries::register)
         modBus.addListener(FMLLoadCompleteEvent::class.java, BulkIt::onLoadComplete)
+        modBus.addListener(RegisterCapabilitiesEvent::class.java, BulkIt::onRegisterCapabilities)
     }
 
     private fun register(modBus: IEventBus) {
-        Items.register(modBus)
+        CoreItems.register(modBus)
+        CoreResourceTypes.register(modBus)
 
-        MOD.register(modBus)
-        BulkItRegistries.register(modBus)
-        DiskDataComponents.register(modBus)
-        CreativeModTabs.register(modBus)
+        BulkItDataComponents.register(modBus)
+        BulkItCreativeTabs.register(modBus)
+    }
+
+    private fun onRegisterCapabilities(event: RegisterCapabilitiesEvent) {
+        event.registerItem(Capabilities.ItemHandler.ITEM, ::DiskItemHandler, CoreItems.DISK_ITEM)
     }
 
     private fun onLoadComplete(event: FMLLoadCompleteEvent) {
