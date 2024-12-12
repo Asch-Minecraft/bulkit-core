@@ -32,17 +32,31 @@ val loader_version_range: String by project
 version = mod_version
 group = mod_group_id
 
-repositories {
+repositories    {
     mavenLocal()
 
     maven {
         name = "BulkIt! API"
-        url = uri("https://repo.repsy.io/mvn/asch/bulkit-api")
+        setUrl("https://repo.repsy.io/mvn/asch/bulkit-api")
     }
 
     maven {
         name = "Kotlin for Forge"
         setUrl("https://thedarkcolour.github.io/KotlinForForge/")
+    }
+
+    maven {
+        name = "Jared's maven"
+        setUrl("https://maven.blamejared.com/")
+    }
+
+    maven {
+        name = "ModMaven"
+        setUrl("https://modmaven.dev")
+    }
+
+    maven {
+        setUrl("https://maven.teamresourceful.com/repository/maven-public/")
     }
 }
 
@@ -106,6 +120,11 @@ neoForge {
             logLevel = org.slf4j.event.Level.DEBUG
         }
     }
+
+    unitTest {
+        enable()
+        testedMod = mods[mod_id]
+    }
 }
 
 configurations {
@@ -116,6 +135,14 @@ configurations {
 dependencies {
     api(libs.bulkit.api)
     implementation(libs.kotlinforforge)
+    implementation(libs.olympus)
+
+    compileOnly(libs.jei.api)
+    runtimeOnly(libs.jei.runtime)
+
+    testImplementation(libs.junit.jupiter)
+    testImplementation("net.neoforged:testframework:${neo_version}")
+    testRuntimeOnly(libs.junit.platform)
 }
 
 val generateModMetadata = tasks.register<ProcessResources>("generateModMetadata") {
@@ -157,6 +184,10 @@ publishing {
 
 tasks.withType<JavaCompile>().configureEach {
     options.encoding = "UTF-8"
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 idea {

@@ -2,10 +2,18 @@
 bulkit-api = "0.1.0-SNAPSHOT"
 neoforged-moddev = "2.0.42-beta"
 kotlinforforge = "5.6.0"
+olympus = "1.1.0"
+jei = "19.21.0.247"
+junit-jupiter = "5.7.1"
 
 [libraries]
-bulkit-api = { module="org.asch.bulkit.api:bulkit-api", version.ref="bulkit-api" }
-kotlinforforge = { module="thedarkcolour:kotlinforforge-neoforge", version.ref="kotlinforforge" }
+bulkit-api = { module = "org.asch.bulkit.api:bulkit-api", version.ref = "bulkit-api" }
+kotlinforforge = { module = "thedarkcolour:kotlinforforge-neoforge", version.ref = "kotlinforforge" }
+olympus = { module = "earth.terrarium.olympus:olympus-neoforge-1.21.3", version.ref = "olympus" }
+jei-api = { module = "mezz.jei:jei-1.21.1-neoforge-api", version.ref = "jei" }
+jei-runtime = { module = "mezz.jei:jei-1.21.1-neoforge-api", version.ref = "jei" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }
+junit-platform = { module = "org.junit.platform:junit-platform-launcher" }
 
 [plugins]
-neoforged-moddev = { id="net.neoforged.moddev", version.ref="neoforged-moddev" }
+neoforged-moddev = { id = "net.neoforged.moddev", version.ref = "neoforged-moddev" }

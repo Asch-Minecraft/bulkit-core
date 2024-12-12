@@ -1,4 +1,4 @@
-package org.asch.bulkit.core.common.item
+package org.asch.bulkit.core.common.item.mod
 
 import org.asch.bulkit.api.item.ModItem
 
